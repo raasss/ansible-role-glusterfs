@@ -1,0 +1,44 @@
+---
+# tasks file for glusterfs
+
+- name: install required packages
+  apt:
+    name: "{{ glusterfs_packages }}"
+    state: present
+
+- name: Add PPA stable repository
+  ansible.builtin.apt_repository:
+    repo: ppa:gluster/glusterfs-7
+
+- name: Install glusterfs packages
+  apt:
+    name:
+      - glusterfs-server
+      - glusterfs-client
+    state: present
+
+- name: Enable and start glusterd service
+  service:
+    name: glusterd
+    state: started
+    enabled: yes
+
+##########################################
+
+# - name: Create gluster volume
+#   gluster.gluster.gluster_volume:
+#     state: present
+#     name: "{{ glusterfs_volume_name }}"
+#     bricks: "{{ glusterfs_volume_bricks }}"
+#     # rebalance: yes
+#     cluster: "{{ glusterfs_volume_cluster }}"
+#     replicas: "{{ glusterfs_volume_replicas }}"
+#     transport: tcp
+#   run_once: true
+#   when: glusterfs_volume_name is defined
+
+# - name: Start gluster volume
+#   gluster.gluster.gluster_volume:
+#     state: started
+#     name: "{{ glusterfs_volume_name }}"
+#   when: glusterfs_volume_name is defined
