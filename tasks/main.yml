@@ -1,6 +1,4 @@
 ---
-# tasks file for glusterfs
-
 - name: install required packages
   apt:
     name: "{{ glusterfs_packages }}"
@@ -22,23 +20,3 @@
     name: glusterd
     state: started
     enabled: yes
-
-##########################################
-
-# - name: Create gluster volume
-#   gluster.gluster.gluster_volume:
-#     state: present
-#     name: "{{ glusterfs_volume_name }}"
-#     bricks: "{{ glusterfs_volume_bricks }}"
-#     # rebalance: yes
-#     cluster: "{{ glusterfs_volume_cluster }}"
-#     replicas: "{{ glusterfs_volume_replicas }}"
-#     transport: tcp
-#   run_once: true
-#   when: glusterfs_volume_name is defined
-
-# - name: Start gluster volume
-#   gluster.gluster.gluster_volume:
-#     state: started
-#     name: "{{ glusterfs_volume_name }}"
-#   when: glusterfs_volume_name is defined
